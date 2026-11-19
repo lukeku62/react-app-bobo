@@ -14,7 +14,7 @@ const PageCatalog = () => {
 
   const getProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/productso")
+      const response = await fetch("http://localhost:3001/api/products")
       if(!response.ok) throw new Error("Errore: risorsa non esistente👻")
       const data = await response.json()
       setProdotti(data)
