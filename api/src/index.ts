@@ -7,6 +7,17 @@ const PORT = Number(process.env.PORT ?? 3001);
 
 await app.register(cors);
 
+// Simulated network latency: random delay between MIN and MAX ms (env-configurable)
+const MIN_DELAY_MS = Number(process.env.MIN_DELAY_MS ?? 500);
+const MAX_DELAY_MS = Number(process.env.MAX_DELAY_MS ?? 1500);
+
+app.addHook('onRequest', async (req) => {
+  if (req.url === '/api/health') return;
+  const delay =
+    MIN_DELAY_MS + Math.random() * Math.max(0, MAX_DELAY_MS - MIN_DELAY_MS);
+  await new Promise((resolve) => setTimeout(resolve, delay));
+});
+
 app.get('/api/health', async () => ({ status: 'ok' }));
 
 // GET /api/products?category=Trail&sort=price|rating&order=asc|desc

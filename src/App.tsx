@@ -6,7 +6,8 @@ const App = () => {
   return (
     <>
     {/* <Counter /> */}
-    <PageCatalog />
+    <div>Pippo</div>
+    <a href="/catalog">catalog</a>
     </>
   )
 }
