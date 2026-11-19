@@ -9,11 +9,21 @@ export type TypeGroupByOpts = "none" | "price-asc" | "price-desc" | "name-asc" |
 const PageCatalog = () => {
 
   const [prodotti, setProdotti] = useState<TypeProduct[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const getProducts = async () => {
-    const response = await fetch("http://localhost:3001/api/products")
-    const data = await response.json()
-    setProdotti(data)
+    try {
+      const response = await fetch("http://localhost:3001/api/productso")
+      if(!response.ok) throw new Error("Errore: risorsa non esistente👻")
+      const data = await response.json()
+      setProdotti(data)
+    } catch (error: unknown) {
+      console.log(error)
+      setError(error instanceof Error ? error.message : "Si è verificato un errore sconosciuto🧐")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -40,6 +50,13 @@ const PageCatalog = () => {
   //     return product.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
   //   }))
   // }
+
+  if(isLoading)
+    return <p>Sto caricando...</p>
+
+  if (error) {
+    return <p>Si è verificato un errore 🤯: <br/> {error}</p>
+  }
 
   return (
     <div>
