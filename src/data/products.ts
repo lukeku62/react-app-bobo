@@ -1,20 +1,4 @@
-export type TypeProduct = {
-  id: string;
-  name: string;
-  category: string;
-  colors: string[];
-  accent: string;
-  prices: number[];
-  rating: number;
-  reviews: number;
-  imageUrl?: string;
-  limited?: boolean;
-};
-
-export type TypeCartItem = {
-  product: TypeProduct;
-  qty: number;
-}
+import type { TypeProduct } from "../types/productsTypes";
 
 export const products: TypeProduct[] = [
   {
